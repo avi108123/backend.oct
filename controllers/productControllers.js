@@ -2,16 +2,22 @@ const Products = require("../models/productModel")
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 
+
+
 let getAllProduct=async(req,res) =>{
     let data = await Products.find();
-    res.send(data);
+    res.status(200).json({
+        success:true,
+        data:data,
+    });
+  
 }
 
 
 let createProduct = async(req,res)=>{
 try {
 
-    console.log("hii")
+   
     let data = req.body;
   let newProduct = await  Products.create(data);
   res.send(newProduct);
@@ -45,7 +51,10 @@ try {
     let deletedProduct = await Products.findByIdAndDelete(id);
 
     if(!deletedProduct){
-        return res.send("not product exist to delete")
+        return res.status(400).json({
+          success:false,
+          errmsg:"no product found for delete"
+        })
     }
 
     res.send("product deleted")

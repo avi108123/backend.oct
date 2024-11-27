@@ -22,6 +22,18 @@ server.get('/',(req,res)=>{
 })
 
 
+function errMiddleware(err,req,res,_){
+  res.status(err.statusCode).json({
+    errmsg:err.message,
+    stack:err.stack
+  })
+}
+
+server.use(errMiddleware)
+
+
+
+
 
 
 

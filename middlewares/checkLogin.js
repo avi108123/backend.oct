@@ -7,7 +7,7 @@ let checkLogin= async(req,res,next)=>{
         let header = req.headers.authorization;
 
         if(!header){
-            return res.send("no header provided")
+            return next( new Error("no header provided"))
         }
     
      let token = header.split(" ")[1];
@@ -27,7 +27,7 @@ let checkLogin= async(req,res,next)=>{
 
             next();
         }catch(error){
-            res.send(error)
+            next(new Error(error.message))
         }
         
    
